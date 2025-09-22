@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react';
 import { Slider } from "@/components/ui/slider"
-import { cn } from '@/lib/utils';
 import { Circle, X } from 'lucide-react';
 
 // Типы
