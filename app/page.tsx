@@ -38,6 +38,8 @@ const App: React.FC = () => {
   const handleClick = (index: number) => {
     if (board[index] || gameResult || isAiThinking) return;
 
+    setIsAiThinking(true);
+
     const newBoard = [...board];
     newBoard[index] = 'X';
     setBoard(newBoard);
@@ -54,7 +56,6 @@ const App: React.FC = () => {
 
     // Ход ИИ
     setTimeout(() => {
-      setIsAiThinking(true);
       const aiMoveIndex = findBestMoveHeuristic(newBoard, difficulty);
       const updatedBoard = [...newBoard];
       updatedBoard[aiMoveIndex] = 'O';
