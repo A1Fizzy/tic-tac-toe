@@ -159,18 +159,20 @@ const App: React.FC = () => {
 
   // Основной метод выбора хода ИИ — ЭВРИСТИКА + СЛОЖНОСТЬ
   const findBestMoveHeuristic = (board: Board, difficulty: number): number => {
-    // 1. Победить, если можно
-    const winMove = getWinningMove(board, 'O');
-    if (winMove !== null) return winMove;
-
-    // 2. Блокировать победу игрока
-    const blockMove = getWinningMove(board, 'X');
-    if (blockMove !== null) return blockMove;
+   
 
     // Решаем, играть ли оптимально
     const playOptimally = Math.random() * 100 < difficulty;
 
     if (playOptimally) {
+       // 1. Победить, если можно
+      const winMove = getWinningMove(board, 'O');
+      if (winMove !== null) return winMove;
+
+      // 2. Блокировать победу игрока
+      const blockMove = getWinningMove(board, 'X');
+      if (blockMove !== null) return blockMove;
+      
       // Оптимальная стратегия
       // 3. Создать вилку
       const forkMove = tryForkMove(board, 'O');
@@ -196,28 +198,29 @@ const App: React.FC = () => {
       if (sideMove !== null) return sideMove;
     } else {
       // Случайная стратегия — 6 вариантов
-      const randomStrategy = Math.floor(Math.random() * 6);
-      switch (randomStrategy) {
-        case 0:
-          return trySideMove(board) ?? tryCornerMove(board) ?? getRandomMove(board);
-        case 1:
-          return tryCornerMove(board) ?? trySideMove(board) ?? getRandomMove(board);
-        case 2:
-          if (board[4] === null && Math.random() > 0.5) return 4;
-          return getRandomMove(board);
-        case 3:
-          return tryOppositeCorner(board) ?? tryForkMove(board, 'O') ?? getRandomMove(board);
-        case 4:
-          return getRandomMove(board);
-        case 5:
-          if (Math.random() > 0.5) {
-            return trySideMove(board) ?? getRandomMove(board);
-          } else {
-            return tryCornerMove(board) ?? getRandomMove(board);
-          }
-        default:
-          return getRandomMove(board);
-      }
+      // const randomStrategy = Math.floor(Math.random() * 6);
+      // switch (randomStrategy) {
+      //   case 0:
+      //     return trySideMove(board) ?? tryCornerMove(board) ?? getRandomMove(board);
+      //   case 1:
+      //     return tryCornerMove(board) ?? trySideMove(board) ?? getRandomMove(board);
+      //   case 2:
+      //     if (board[4] === null && Math.random() > 0.5) return 4;
+      //     return getRandomMove(board);
+      //   case 3:
+      //     return tryOppositeCorner(board) ?? tryForkMove(board, 'O') ?? getRandomMove(board);
+      //   case 4:
+      //     return getRandomMove(board);
+      //   case 5:
+      //     if (Math.random() > 0.5) {
+      //       return trySideMove(board) ?? getRandomMove(board);
+      //     } else {
+      //       return tryCornerMove(board) ?? getRandomMove(board);
+      //     }
+      //   default:
+      //     return getRandomMove(board);
+      // }
+      return getRandomMove(board);
     }
 
     // fallback
